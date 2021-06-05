@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <a href="/books" class="btn btn-success">Agregar</a>
+    <table class="table">
+        {{ books | random}}
+        {{ books | slice:":1" | join:", "}}
+        {% load format_name %}
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Editorial</th>
+            <th>Year</th>
+        </tr>
+        {# Iterar libros del catalogo #}
+        {% for book in books %}
+        <tr>
+            <td>{{book.id}}</td>
+            <td>{{book.title}}</td>
+            <td><em>{{book.author.first_name}}</em></td>
+            <td>
+                <a href="/catalog/{{book.editorial}}/books">
+                    {{book.editorial | upper}}
+                </a>
+            </td>
+            <td>{{book.year | add:"2"}}</td>
+            <td><a href="/book/{{book.id}}" class="btn btn-sm btn-info">Editar</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
